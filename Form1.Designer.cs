@@ -29,21 +29,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SimulatorData = new ListView();
+            SimulatorData = new SimListView.SimListView();
             SuspendLayout();
-            // 
-            // SimulatorData
-            // 
-            SimulatorData.Alignment = ListViewAlignment.Default;
-            SimulatorData.View = View.Details;
-            SimulatorData.FullRowSelect = true;
-            SimulatorData.GridLines = true;
-            SimulatorData.Location = new Point(10, 9);
-            SimulatorData.Margin = new Padding(3, 2, 3, 2);
-            SimulatorData.Name = "SimulatorData";
-            SimulatorData.Size = new Size(500, 400);
-            SimulatorData.TabIndex = 0;
-            SimulatorData.UseCompatibleStateImageBehavior = false;
+
             // 
             // Form1
             // 
@@ -51,7 +39,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 450);
             Controls.Add(SimulatorData);
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(3, 3, 3, 3);
             Name = "Form1";
             Text = "Simulator Listener";
             ResumeLayout(false);
@@ -59,6 +47,6 @@
 
         #endregion
 
-        public ListView SimulatorData;
+        public SimListView.SimListView SimulatorData;
     }
 }
