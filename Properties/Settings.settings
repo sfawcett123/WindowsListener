@@ -5,5 +5,11 @@
     <Setting Name="Parameters" Type="System.String" Scope="User">
       <Value Profile="(Default)">"PLANE ALTITUDE" , "PLANE LATITUDE"</Value>
     </Setting>
+    <Setting Name="redis_server" Type="System.String" Scope="User">
+      <Value Profile="(Default)">controller.local</Value>
+    </Setting>
+    <Setting Name="redis_port" Type="System.String" Scope="User">
+      <Value Profile="(Default)">6379</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
