@@ -39,6 +39,8 @@ namespace Test
             PeriodicEvents = new System.Windows.Forms.Timer(components);
             simulatorOn = new CheckBox();
             EnableRedis = new CheckBox();
+            loadData = new Button();
+            openAircraftData = new OpenFileDialog();
             SuspendLayout();
             // 
             // SimulatorData
@@ -46,29 +48,29 @@ namespace Test
             SimulatorData.Alignment = ListViewAlignment.Default;
             SimulatorData.FullRowSelect = true;
             SimulatorData.GridLines = true;
-            SimulatorData.Location = new Point(11, 12);
+            SimulatorData.Location = new Point(10, 9);
             SimulatorData.Margin = new Padding(3, 2, 3, 2);
             SimulatorData.Name = "SimulatorData";
-            SimulatorData.Size = new Size(571, 532);
+            SimulatorData.Size = new Size(500, 400);
             SimulatorData.TabIndex = 0;
             SimulatorData.UseCompatibleStateImageBehavior = false;
             SimulatorData.View = View.Details;
             // 
             // server
             // 
-            server.Location = new Point(588, 12);
+            server.Location = new Point(514, 9);
+            server.Margin = new Padding(3, 2, 3, 2);
             server.Name = "server";
-            server.Size = new Size(125, 27);
+            server.Size = new Size(110, 23);
             server.TabIndex = 2;
-            server.Text = "controller.local";
             // 
             // port
             // 
-            port.Location = new Point(719, 12);
+            port.Location = new Point(629, 9);
+            port.Margin = new Padding(3, 2, 3, 2);
             port.Name = "port";
-            port.Size = new Size(68, 27);
+            port.Size = new Size(60, 23);
             port.TabIndex = 3;
-            port.Text = "6379";
             // 
             // PeriodicEvents
             // 
@@ -79,9 +81,10 @@ namespace Test
             // simulatorOn
             // 
             simulatorOn.AutoSize = true;
-            simulatorOn.Location = new Point(588, 105);
+            simulatorOn.Location = new Point(514, 79);
+            simulatorOn.Margin = new Padding(3, 2, 3, 2);
             simulatorOn.Name = "simulatorOn";
-            simulatorOn.Size = new Size(95, 24);
+            simulatorOn.Size = new Size(77, 19);
             simulatorOn.TabIndex = 4;
             simulatorOn.Text = "Simulator";
             simulatorOn.UseVisualStyleBackColor = true;
@@ -90,25 +93,43 @@ namespace Test
             // EnableRedis
             // 
             EnableRedis.AutoSize = true;
-            EnableRedis.Location = new Point(589, 78);
+            EnableRedis.Location = new Point(515, 58);
+            EnableRedis.Margin = new Padding(3, 2, 3, 2);
             EnableRedis.Name = "EnableRedis";
-            EnableRedis.Size = new Size(67, 24);
+            EnableRedis.Size = new Size(54, 19);
             EnableRedis.TabIndex = 5;
             EnableRedis.Text = "Redis";
             EnableRedis.UseVisualStyleBackColor = true;
             EnableRedis.CheckedChanged += OnEnableRedis;
             // 
+            // loadData
+            // 
+            loadData.Location = new Point(11, 417);
+            loadData.Name = "loadData";
+            loadData.Size = new Size(75, 23);
+            loadData.TabIndex = 6;
+            loadData.Text = "Load";
+            loadData.UseVisualStyleBackColor = true;
+            loadData.Click += OnLoadDataButton;
+            // 
+            // openAircraftData
+            // 
+            openAircraftData.DefaultExt = "yaml";
+            openAircraftData.FileName = "aircraftdata";
+            openAircraftData.Filter = "yaml (*.yaml, *.yml)|*.yaml;*.yml";
+            openAircraftData.Title = "Open Aircarft Data YAML";
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 600);
+            ClientSize = new Size(700, 450);
+            Controls.Add(loadData);
             Controls.Add(EnableRedis);
             Controls.Add(simulatorOn);
             Controls.Add(port);
             Controls.Add(server);
             Controls.Add(SimulatorData);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Simulator Listener";
             ResumeLayout(false);
@@ -121,5 +142,7 @@ namespace Test
         private System.Windows.Forms.Timer PeriodicEvents;
         private CheckBox simulatorOn;
         private CheckBox EnableRedis;
+        private Button loadData;
+        private OpenFileDialog openAircraftData;
     }
 }

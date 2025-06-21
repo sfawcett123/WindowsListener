@@ -2,36 +2,37 @@ using SimListener;
 using System.Diagnostics;
 using Test.Properties;
 using SimRedis;
+using System.IO;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.RepresentationModel;
 
 namespace Test
 {
     public partial class Form1 : Form
     {
         List<string> Parameters = new List<string>();
+        string projectDirectory = Path.Combine(Environment.CurrentDirectory, "data");
+
         public Form1()
         {
             InitializeComponent();
-
-            Parameters = new List<string>(Settings.Default.Parameters.Split(','));
-
-            foreach (string parameter in Parameters)
-            {
-                string cleaned = parameter.Trim().Trim('"');
-                SimulatorData.add_value(cleaned, "0", ""); // Initialize with default value
-            }
 
             SimListener = new SimListener.Connect();
             SimListener.SimConnected += SimListener_SimConnected;
             SimListener.SimDataRecieved += SimListener_SimDataRecieved;
             SimListener.Enabled = false; // Initially disabled
             simulatorOn.Checked = false; // Initially disabled
-
+            simulatorOn.Enabled = false; // Disable until Simulator is configured
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
-            SimRedis = new SimRedis.SimRedis(server.Text, int.Parse(port.Text));
+            SimRedis = new SimRedis.SimRedis();
             SimRedis.RedisDataRecieved += SimRedis_RedisDataRecieved;
-            SimRedis.Enabled = true; // Enable Redis connection
-            EnableRedis.Checked = true; // Initially enabled
+            SimRedis.Enabled = false; // Enable Redis connection
+            EnableRedis.Checked = false; // Initially enabled
+
+            server.Text = SimRedis.server; // Default server    
+            port.Text = SimRedis.port.ToString(); // Default port
         }
 
         private void SimRedis_RedisDataRecieved(object? sender, RedisDataEventArgs e)
@@ -54,10 +55,6 @@ namespace Test
                 {
                     Debug.WriteLine("Received empty or null data from simulator.");
                     continue;
-                }
-                foreach (string key in kvp.Keys)
-                {
-                    SimulatorData.add_value(key, kvp[key], kvp.ContainsKey("Unit") ? kvp["Unit"] : ""); // Add unit if available
                 }
             }
         }
@@ -93,6 +90,40 @@ namespace Test
         private void OnEnableRedis(object sender, EventArgs e)
         {
             SimRedis.Enabled = EnableRedis.Checked;
+        }
+
+        private void OnLoadDataButton(object sender, EventArgs e)
+        {
+           
+            OpenFileDialog openAircraftData = new OpenFileDialog
+            {
+                InitialDirectory = projectDirectory,
+                Filter = "Aircraft Data Files (*.yaml)|*.yaml;*.yml|All Files (*.*)|*.*",
+                Title = "Load Aircraft Data"
+            };
+
+            if ( openAircraftData.ShowDialog() == DialogResult.OK )
+            {
+                string filePath = openAircraftData.FileName;
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    simulatorOn.Enabled = false;
+                    Debug.WriteLine("No file selected.");
+                    return;
+                }
+                try
+                {
+                    simulatorOn.Enabled = true; 
+                    Debug.WriteLine($"Aircraft data loaded from {filePath}");
+                    SimulatorData.load( filePath );
+                }
+                catch (Exception ex)
+                {
+                    simulatorOn.Enabled = false;
+                    Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
+                }
+        
+            }
         }
     }
 }

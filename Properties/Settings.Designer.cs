@@ -25,18 +25,6 @@ namespace Test.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"PLANE ALTITUDE\" , \"PLANE LATITUDE\"")]
-        public string Parameters {
-            get {
-                return ((string)(this["Parameters"]));
-            }
-            set {
-                this["Parameters"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("controller.local")]
         public string redis_server {
             get {
