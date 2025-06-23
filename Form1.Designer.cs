@@ -1,6 +1,6 @@
-﻿using Test.Properties;
+﻿using Broadcast.Properties;
 
-namespace Test
+namespace Broadcast
 {
     partial class Form1
     {
@@ -33,6 +33,7 @@ namespace Test
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             SimulatorData = new SimListView.SimListView();
             server = new TextBox();
             port = new TextBox();
@@ -45,8 +46,16 @@ namespace Test
             simTest = new RadioButton();
             simManual = new RadioButton();
             redisGroup = new GroupBox();
+            statusStrip1 = new StatusStrip();
+            lastMessage = new ToolStripStatusLabel();
+            menuStrip1 = new MenuStrip();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            saveFileDialog1 = new SaveFileDialog();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
+            statusStrip1.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // SimulatorData
@@ -61,7 +70,6 @@ namespace Test
             SimulatorData.TabIndex = 0;
             SimulatorData.UseCompatibleStateImageBehavior = false;
             SimulatorData.View = View.Details;
-            SimulatorData.SelectedIndexChanged += SimulatorData_SelectedIndexChanged;
             // 
             // server
             // 
@@ -120,9 +128,9 @@ namespace Test
             simulatorGroup.Controls.Add(simData);
             simulatorGroup.Controls.Add(simTest);
             simulatorGroup.Controls.Add(simManual);
-            simulatorGroup.Location = new Point(131, 524);
+            simulatorGroup.Location = new Point(131, 517);
             simulatorGroup.Name = "simulatorGroup";
-            simulatorGroup.Size = new Size(298, 119);
+            simulatorGroup.Size = new Size(298, 111);
             simulatorGroup.TabIndex = 7;
             simulatorGroup.TabStop = false;
             simulatorGroup.Text = "Simulator";
@@ -170,22 +178,67 @@ namespace Test
             redisGroup.Controls.Add(server);
             redisGroup.Controls.Add(port);
             redisGroup.Controls.Add(EnableRedis);
-            redisGroup.Location = new Point(458, 524);
+            redisGroup.Location = new Point(458, 519);
             redisGroup.Name = "redisGroup";
-            redisGroup.Size = new Size(341, 119);
+            redisGroup.Size = new Size(341, 109);
             redisGroup.TabIndex = 8;
             redisGroup.TabStop = false;
             redisGroup.Text = "Redis";
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { lastMessage });
+            statusStrip1.Location = new Point(0, 651);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(982, 22);
+            statusStrip1.TabIndex = 9;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // lastMessage
+            // 
+            lastMessage.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            lastMessage.Name = "lastMessage";
+            lastMessage.Size = new Size(0, 16);
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(982, 28);
+            menuStrip1.TabIndex = 10;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.ShortcutKeyDisplayString = "H";
+            toolStripMenuItem1.Size = new Size(55, 24);
+            toolStripMenuItem1.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(224, 26);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(982, 653);
+            ClientSize = new Size(982, 673);
+            Controls.Add(statusStrip1);
+            Controls.Add(menuStrip1);
             Controls.Add(redisGroup);
             Controls.Add(simulatorGroup);
             Controls.Add(loadData);
             Controls.Add(SimulatorData);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Simulator Listener";
@@ -193,7 +246,12 @@ namespace Test
             simulatorGroup.PerformLayout();
             redisGroup.ResumeLayout(false);
             redisGroup.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -208,5 +266,11 @@ namespace Test
         private RadioButton simData;
         private RadioButton simTest;
         private RadioButton simManual;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel lastMessage;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private SaveFileDialog saveFileDialog1;
     }
 }

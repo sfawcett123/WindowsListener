@@ -1,4 +1,4 @@
-namespace Test
+namespace Broadcast
 {
     internal static class Program
     {

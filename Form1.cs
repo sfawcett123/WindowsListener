@@ -1,13 +1,8 @@
 using SimListener;
-using System.Diagnostics;
-using Test.Properties;
 using SimRedis;
-using System.IO;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.RepresentationModel;
+using System.Diagnostics;
 
-namespace Test
+namespace Broadcast
 {
     public partial class Form1 : Form
     {
@@ -42,6 +37,7 @@ namespace Test
                 if (kvp.Key == null || kvp.Value == null)
                 {
                     Debug.WriteLine("Received empty or null data from Redis.");
+                    lastMessage.Text = "Received empty or null data from Redis.";
                     continue;
                 }
                 Debug.WriteLine($"Data {kvp.Key} = {kvp.Value}"); // Add unit if available
@@ -54,6 +50,7 @@ namespace Test
                 if (kvp == null || kvp.Count == 0)
                 {
                     Debug.WriteLine("Received empty or null data from simulator.");
+                    lastMessage.Text = "Received empty or null data from simulator.";
                     continue;
                 }
             }
@@ -64,11 +61,13 @@ namespace Test
             if (sender == null)
             {
                 Debug.WriteLine("Simulator connection failed: sender is null");
+                lastMessage.Text = "Simulator connection failed: sender is null";
                 return;
             }
             if (sender is not Connect)
             {
                 Debug.WriteLine("Simulator connection failed: sender is not Connect");
+                lastMessage.Text = "Simulator connection failed: sender is not Connect";
                 return;
             }
             Connect s = (Connect)sender;
@@ -76,6 +75,7 @@ namespace Test
             s.AddRequests(SimulatorData.to_string());
 
             Debug.WriteLine("Simulator connected");
+            lastMessage.Text = "Simulator connected";
         }
         private void PeriodicEvents_Tick(object sender, EventArgs e)
         {
@@ -110,6 +110,7 @@ namespace Test
                 {
                     // simulatorOn.Enabled = false;
                     Debug.WriteLine("No file selected.");
+                    lastMessage.Text = "No file selected.";
                     simData.Enabled = false;
                     simManual.Enabled = false;
                     simTest.Enabled = false;
@@ -118,6 +119,7 @@ namespace Test
                 try
                 {
                     Debug.WriteLine($"Aircraft data loaded from {filePath}");
+                    lastMessage.Text = $"Aircraft data loaded from {filePath}";
                     SimulatorData.load(filePath);
                     simData.Enabled = true;
                     simManual.Enabled = true;
@@ -126,6 +128,7 @@ namespace Test
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
+                    lastMessage.Text = $"Error loading aircraft data: {ex.Message}";
                     simData.Enabled = false;
                     simManual.Enabled = false;
                     simTest.Enabled = false;
@@ -133,15 +136,15 @@ namespace Test
 
             }
         }
-
-        private void SimulatorData_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void simTest_CheckedChanged(object sender, EventArgs e)
         {
             SimulatorData.TestMode = simTest.Checked;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox a = new AboutBox();
+            a.Show();
         }
     }
 }
