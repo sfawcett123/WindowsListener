@@ -41,10 +41,10 @@ namespace Test
             loadData = new Button();
             openAircraftData = new OpenFileDialog();
             simulatorGroup = new GroupBox();
-            redisGroup = new GroupBox();
-            simManual = new RadioButton();
-            simTest = new RadioButton();
             simData = new RadioButton();
+            simTest = new RadioButton();
+            simManual = new RadioButton();
+            redisGroup = new GroupBox();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
             SuspendLayout();
@@ -88,6 +88,7 @@ namespace Test
             // EnableRedis
             // 
             EnableRedis.AutoSize = true;
+            EnableRedis.Enabled = false;
             EnableRedis.Location = new Point(6, 57);
             EnableRedis.Name = "EnableRedis";
             EnableRedis.Size = new Size(67, 24);
@@ -95,7 +96,6 @@ namespace Test
             EnableRedis.Text = "Redis";
             EnableRedis.UseVisualStyleBackColor = true;
             EnableRedis.CheckedChanged += OnEnableRedis;
-            EnableRedis.Enabled = false;
             // 
             // loadData
             // 
@@ -127,6 +127,44 @@ namespace Test
             simulatorGroup.TabStop = false;
             simulatorGroup.Text = "Simulator";
             // 
+            // simData
+            // 
+            simData.AutoSize = true;
+            simData.Enabled = false;
+            simData.Location = new Point(6, 79);
+            simData.Name = "simData";
+            simData.Size = new Size(94, 24);
+            simData.TabIndex = 2;
+            simData.TabStop = true;
+            simData.Text = "Simulator";
+            simData.UseVisualStyleBackColor = true;
+            // 
+            // simTest
+            // 
+            simTest.AutoSize = true;
+            simTest.Enabled = false;
+            simTest.Location = new Point(6, 49);
+            simTest.Name = "simTest";
+            simTest.Size = new Size(92, 24);
+            simTest.TabIndex = 1;
+            simTest.TabStop = true;
+            simTest.Text = "Test Data";
+            simTest.UseVisualStyleBackColor = true;
+            simTest.CheckedChanged += simTest_CheckedChanged;
+            // 
+            // simManual
+            // 
+            simManual.AutoSize = true;
+            simManual.Checked = true;
+            simManual.Enabled = false;
+            simManual.Location = new Point(6, 22);
+            simManual.Name = "simManual";
+            simManual.Size = new Size(79, 24);
+            simManual.TabIndex = 0;
+            simManual.TabStop = true;
+            simManual.Text = "Manual";
+            simManual.UseVisualStyleBackColor = true;
+            // 
             // redisGroup
             // 
             redisGroup.Controls.Add(server);
@@ -138,43 +176,6 @@ namespace Test
             redisGroup.TabIndex = 8;
             redisGroup.TabStop = false;
             redisGroup.Text = "Redis";
-            // 
-            // simManual
-            // 
-            simManual.AutoSize = true;
-            simManual.Location = new Point(6, 22);
-            simManual.Name = "simManual";
-            simManual.Size = new Size(79, 24);
-            simManual.TabIndex = 0;
-            simManual.TabStop = true;
-            simManual.Text = "Manual";
-            simManual.UseVisualStyleBackColor = true;
-            simManual.Enabled = false;
-            simManual.Checked = true;
-            // 
-            // simTest
-            // 
-            simTest.AutoSize = true;
-            simTest.Location = new Point(6, 49);
-            simTest.Name = "simTest";
-            simTest.Size = new Size(92, 24);
-            simTest.TabIndex = 1;
-            simTest.TabStop = true;
-            simTest.Text = "Test Data";
-            simTest.UseVisualStyleBackColor = true;
-            simTest.Enabled = false;
-            // 
-            // simData
-            // 
-            simData.AutoSize = true;
-            simData.Location = new Point(6, 79);
-            simData.Name = "simData";
-            simData.Size = new Size(94, 24);
-            simData.TabIndex = 2;
-            simData.TabStop = true;
-            simData.Text = "Simulator";
-            simData.UseVisualStyleBackColor = true;
-            simData.Enabled = false;
             // 
             // Form1
             // 

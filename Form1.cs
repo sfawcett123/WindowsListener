@@ -22,8 +22,8 @@ namespace Test
             SimListener.SimConnected += SimListener_SimConnected;
             SimListener.SimDataRecieved += SimListener_SimDataRecieved;
             SimListener.Enabled = false; // Initially disabled
-           // simulatorOn.Checked = false; // Initially disabled
-           // simulatorOn.Enabled = false; // Disable until Simulator is configured
+                                         // simulatorOn.Checked = false; // Initially disabled
+                                         // simulatorOn.Enabled = false; // Disable until Simulator is configured
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
             SimRedis = new SimRedis.SimRedis();
@@ -108,7 +108,7 @@ namespace Test
                 string filePath = openAircraftData.FileName;
                 if (string.IsNullOrEmpty(filePath))
                 {
-                   // simulatorOn.Enabled = false;
+                    // simulatorOn.Enabled = false;
                     Debug.WriteLine("No file selected.");
                     simData.Enabled = false;
                     simManual.Enabled = false;
@@ -137,6 +137,11 @@ namespace Test
         private void SimulatorData_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void simTest_CheckedChanged(object sender, EventArgs e)
+        {
+            SimulatorData.TestMode = simTest.Checked;
         }
     }
 }

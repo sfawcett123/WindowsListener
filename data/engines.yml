@@ -8,6 +8,8 @@ measures:
      real:
        min: 0
        max: 16384
+       rotation: RESTART
+       increment: 1638
      display:
        min: 0
        max: 100
@@ -19,6 +21,8 @@ measures:
      real:
        min: 0
        max: 16384
+       rotation: RETURN
+       increment: 100
      display:
        min: 0
        max: 100
