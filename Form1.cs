@@ -22,8 +22,8 @@ namespace Test
             SimListener.SimConnected += SimListener_SimConnected;
             SimListener.SimDataRecieved += SimListener_SimDataRecieved;
             SimListener.Enabled = false; // Initially disabled
-            simulatorOn.Checked = false; // Initially disabled
-            simulatorOn.Enabled = false; // Disable until Simulator is configured
+           // simulatorOn.Checked = false; // Initially disabled
+           // simulatorOn.Enabled = false; // Disable until Simulator is configured
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
             SimRedis = new SimRedis.SimRedis();
@@ -84,7 +84,7 @@ namespace Test
 
         private void EnableSimData(object sender, EventArgs e)
         {
-            SimListener.Enabled = simulatorOn.Checked;
+            //SimListener.Enabled = simulatorOn.Checked;
         }
 
         private void OnEnableRedis(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace Test
 
         private void OnLoadDataButton(object sender, EventArgs e)
         {
-           
+
             OpenFileDialog openAircraftData = new OpenFileDialog
             {
                 InitialDirectory = projectDirectory,
@@ -102,28 +102,41 @@ namespace Test
                 Title = "Load Aircraft Data"
             };
 
-            if ( openAircraftData.ShowDialog() == DialogResult.OK )
+            if (openAircraftData.ShowDialog() == DialogResult.OK)
             {
+                simManual.Checked = true;
                 string filePath = openAircraftData.FileName;
                 if (string.IsNullOrEmpty(filePath))
                 {
-                    simulatorOn.Enabled = false;
+                   // simulatorOn.Enabled = false;
                     Debug.WriteLine("No file selected.");
+                    simData.Enabled = false;
+                    simManual.Enabled = false;
+                    simTest.Enabled = false;
                     return;
                 }
                 try
                 {
-                    simulatorOn.Enabled = true; 
                     Debug.WriteLine($"Aircraft data loaded from {filePath}");
-                    SimulatorData.load( filePath );
+                    SimulatorData.load(filePath);
+                    simData.Enabled = true;
+                    simManual.Enabled = true;
+                    simTest.Enabled = true;
                 }
                 catch (Exception ex)
                 {
-                    simulatorOn.Enabled = false;
                     Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
+                    simData.Enabled = false;
+                    simManual.Enabled = false;
+                    simTest.Enabled = false;
                 }
-        
+
             }
+        }
+
+        private void SimulatorData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
