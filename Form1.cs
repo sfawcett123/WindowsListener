@@ -23,12 +23,35 @@ namespace Broadcast
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
             SimRedis = new SimRedis.SimRedis();
-            SimRedis.RedisDataRecieved += SimRedis_RedisDataRecieved;
+            SimRedis.DataRecieved += SimRedis_RedisDataRecieved;
+            SimRedis.OnConnected += SimRedis_OnConnected;
+            SimRedis.OnDisconnected += SimRedis_OnDisconnected;
             SimRedis.Enabled = false; // Enable Redis connection
             EnableRedis.Checked = false; // Initially enabled
 
+            btnPurge.Enabled = false; // Initially disabled
             server.Text = SimRedis.server; // Default server    
             port.Text = SimRedis.port.ToString(); // Default port
+        }
+
+        private void SimRedis_OnDisconnected(object? sender, EventArgs e)
+        {
+            if( InvokeRequired )
+            {
+                Invoke(new Action(() => SimRedis_OnDisconnected(sender, e)));
+                return;
+            }
+            btnPurge.Enabled = false; // Disable purge button on disconnect
+        }
+
+        private void SimRedis_OnConnected(object? sender, EventArgs e)
+        {
+            if( InvokeRequired )
+            {
+                Invoke(new Action(() => SimRedis_OnConnected(sender, e)));
+                return;
+            }
+            btnPurge.Enabled = true; // Enable purge button on connect  
         }
 
         private void SimRedis_RedisDataRecieved(object? sender, RedisDataEventArgs e)
@@ -164,7 +187,7 @@ namespace Broadcast
 
         private void loadForm(object sender, EventArgs e)
         {
-            Yaml yaml = new Yaml(Path.Combine( configDirectory , "startup.yaml" ) );
+            Yaml yaml = new Yaml(Path.Combine(configDirectory, "startup.yaml"));
             if (yaml == null || yaml.Files.Count == 0)
             {
                 Debug.WriteLine("No YAML files found in the configuration directory.");
@@ -180,7 +203,7 @@ namespace Broadcast
                 }
             }
 
-            if( yaml == null )
+            if (yaml == null)
             {
                 Debug.WriteLine("YAML data is null.");
                 lastMessage.Text = "YAML data is null.";
@@ -211,6 +234,11 @@ namespace Broadcast
                 simTest.Checked = true;
             }
 
+        }
+
+        private void onPurgeRedis(object sender, MouseEventArgs e)
+        {
+            SimRedis.Purge();
         }
     }
 }
