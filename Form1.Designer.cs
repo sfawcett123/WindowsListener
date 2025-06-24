@@ -252,6 +252,7 @@ namespace Broadcast
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Simulator Listener";
+            Load += loadForm;
             simulatorGroup.ResumeLayout(false);
             simulatorGroup.PerformLayout();
             redisGroup.ResumeLayout(false);

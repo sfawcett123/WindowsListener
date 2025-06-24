@@ -34,7 +34,7 @@
     <Content Include="data\engines.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\startup.yaml">
+    <Content Include="settings\startup.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

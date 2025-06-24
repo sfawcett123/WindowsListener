@@ -8,6 +8,7 @@ namespace Broadcast
     {
         List<string> Parameters = new List<string>();
         string projectDirectory = Path.Combine(Environment.CurrentDirectory, "data");
+        string configDirectory = Path.Combine(Environment.CurrentDirectory, "settings");
 
         public Form1()
         {
@@ -118,10 +119,10 @@ namespace Broadcast
             }
         }
 
-        private  void loadFile( string filePath)
+        private void loadFile(string filePath)
         {
             simManual.Checked = true;
-          
+
             if (string.IsNullOrEmpty(filePath))
             {
                 // simulatorOn.Enabled = false;
@@ -159,6 +160,57 @@ namespace Broadcast
         {
             AboutBox a = new AboutBox();
             a.Show();
+        }
+
+        private void loadForm(object sender, EventArgs e)
+        {
+            Yaml yaml = new Yaml(Path.Combine( configDirectory , "startup.yaml" ) );
+            if (yaml == null || yaml.Files.Count == 0)
+            {
+                Debug.WriteLine("No YAML files found in the configuration directory.");
+                lastMessage.Text = "No YAML files found in the configuration directory.";
+            }
+            else
+            {
+                SimulatorData.clear();
+                foreach (string file in yaml.Files)
+                {
+                    string f = Path.Combine(projectDirectory, file);
+                    loadFile(f);
+                }
+            }
+
+            if( yaml == null )
+            {
+                Debug.WriteLine("YAML data is null.");
+                lastMessage.Text = "YAML data is null.";
+                return;
+            }
+
+            if (yaml.RedisEnabled)
+            {
+                EnableRedis.Checked = true;
+                SimRedis.Enabled = true;
+            }
+            else
+            {
+                EnableRedis.Checked = false;
+                SimRedis.Enabled = false;
+            }
+
+            if (yaml.CurrentMode == Yaml.Mode.Manual)
+            {
+                simManual.Checked = true;
+            }
+            else if (yaml.CurrentMode == Yaml.Mode.Simulator)
+            {
+                simData.Checked = true;
+            }
+            else if (yaml.CurrentMode == Yaml.Mode.Test)
+            {
+                simTest.Checked = true;
+            }
+
         }
     }
 }
