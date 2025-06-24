@@ -39,7 +39,7 @@ namespace Broadcast
 
         private void SimulatorData_ItemChanged(object? sender, ItemData e)
         {
-            SimRedis.write(e.key, e.value);
+            SimRedis.write(e.key,e.index , e.value);
         }
 
         private void SimRedis_OnDisconnected(object? sender, EventArgs e)

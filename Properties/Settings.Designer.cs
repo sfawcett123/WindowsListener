@@ -22,29 +22,5 @@ namespace Broadcast.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("controller.local")]
-        public string redis_server {
-            get {
-                return ((string)(this["redis_server"]));
-            }
-            set {
-                this["redis_server"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6379")]
-        public string redis_port {
-            get {
-                return ((string)(this["redis_port"]));
-            }
-            set {
-                this["redis_port"] = value;
-            }
-        }
     }
 }
