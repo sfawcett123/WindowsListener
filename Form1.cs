@@ -41,7 +41,7 @@ namespace Broadcast
                     lastMessage.Text = "Received empty or null data from Redis.";
                     continue;
                 }
-                Debug.WriteLine($"Data {kvp.Key} = {kvp.Value}"); // Add unit if available
+                //Debug.WriteLine($"Data {kvp.Key} = {kvp.Value}"); // Add unit if available
             }
         }
         private void SimListener_SimDataRecieved(object? sender, SimListener.SimulatorData e)

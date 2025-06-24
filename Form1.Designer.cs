@@ -98,7 +98,7 @@ namespace Broadcast
             // EnableRedis
             // 
             EnableRedis.AutoSize = true;
-            EnableRedis.Enabled = false;
+            EnableRedis.Enabled = true;
             EnableRedis.Location = new Point(5, 43);
             EnableRedis.Margin = new Padding(3, 2, 3, 2);
             EnableRedis.Name = "EnableRedis";

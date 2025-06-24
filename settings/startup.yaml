@@ -3,6 +3,6 @@
 load:
   - "engines.yml"
   - "engines2.yml" 
-mode: test
+mode: manual
 redis: false
     

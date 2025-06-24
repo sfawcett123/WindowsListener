@@ -22,7 +22,7 @@ measures:
        min: 0
        max: 16384
        rotation: RETURN
-       increment: 100
+       increment: 1638
      display:
        min: 0
        max: 100

@@ -25,9 +25,6 @@
 
   <ItemGroup>
     <Content Include="assets\airplane.ico" />
-    <Content Include="assets\engines.yml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="data\engines2.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
