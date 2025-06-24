@@ -1,0 +1,29 @@
+﻿---
+
+measures:
+   - id: engine_3
+     name: "Engine Three"
+     variable: "ENG N1 RPM"
+     index: 3
+     real:
+       min: 0
+       max: 16384
+       rotation: RESTART
+       increment: 1638
+     display:
+       min: 0
+       max: 100
+       unit: "RPM"
+   - id: engine_4
+     name: "Engine Four"
+     variable: "ENG N1 RPM"
+     index: 4
+     real:
+       min: 0
+       max: 16384
+       rotation: RETURN
+       increment: 100
+     display:
+       min: 0
+       max: 100
+       unit: "RPM"

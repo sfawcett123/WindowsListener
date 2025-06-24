@@ -99,41 +99,55 @@ namespace Broadcast
             {
                 InitialDirectory = projectDirectory,
                 Filter = "Aircraft Data Files (*.yaml)|*.yaml;*.yml|All Files (*.*)|*.*",
-                Title = "Load Aircraft Data"
+                Title = "Load Aircraft Data",
+                Multiselect = true
             };
 
             if (openAircraftData.ShowDialog() == DialogResult.OK)
             {
-                simManual.Checked = true;
-                string filePath = openAircraftData.FileName;
-                if (string.IsNullOrEmpty(filePath))
-                {
-                    // simulatorOn.Enabled = false;
-                    Debug.WriteLine("No file selected.");
-                    lastMessage.Text = "No file selected.";
-                    simData.Enabled = false;
-                    simManual.Enabled = false;
-                    simTest.Enabled = false;
-                    return;
-                }
-                try
-                {
-                    Debug.WriteLine($"Aircraft data loaded from {filePath}");
-                    lastMessage.Text = $"Aircraft data loaded from {filePath}";
-                    SimulatorData.load(filePath);
-                    simData.Enabled = true;
-                    simManual.Enabled = true;
-                    simTest.Enabled = true;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
-                    lastMessage.Text = $"Error loading aircraft data: {ex.Message}";
-                    simData.Enabled = false;
-                    simManual.Enabled = false;
-                    simTest.Enabled = false;
-                }
+                SimulatorData.clear();
 
+                foreach (string filePath in openAircraftData.FileNames)
+                {
+                    if (File.Exists(filePath))
+                    {
+                        loadFile(filePath);
+
+                    }
+                }
+            }
+        }
+
+        private  void loadFile( string filePath)
+        {
+            simManual.Checked = true;
+          
+            if (string.IsNullOrEmpty(filePath))
+            {
+                // simulatorOn.Enabled = false;
+                Debug.WriteLine("No file selected.");
+                lastMessage.Text = "No file selected.";
+                simData.Enabled = false;
+                simManual.Enabled = false;
+                simTest.Enabled = false;
+                return;
+            }
+            try
+            {
+                Debug.WriteLine($"Aircraft data loaded from {filePath}");
+                lastMessage.Text = $"Aircraft data loaded from {filePath}";
+                SimulatorData.load(filePath);
+                simData.Enabled = true;
+                simManual.Enabled = true;
+                simTest.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
+                lastMessage.Text = $"Error loading aircraft data: {ex.Message}";
+                simData.Enabled = false;
+                simManual.Enabled = false;
+                simTest.Enabled = false;
             }
         }
         private void simTest_CheckedChanged(object sender, EventArgs e)

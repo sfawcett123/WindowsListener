@@ -63,10 +63,10 @@ namespace Broadcast
             SimulatorData.Alignment = ListViewAlignment.Default;
             SimulatorData.FullRowSelect = true;
             SimulatorData.GridLines = true;
-            SimulatorData.Location = new Point(11, 12);
+            SimulatorData.Location = new Point(10, 25);
             SimulatorData.Margin = new Padding(3, 2, 3, 2);
             SimulatorData.Name = "SimulatorData";
-            SimulatorData.Size = new Size(950, 500);
+            SimulatorData.Size = new Size(832, 355);
             SimulatorData.TabIndex = 0;
             SimulatorData.UseCompatibleStateImageBehavior = false;
             SimulatorData.View = View.Details;
@@ -74,17 +74,19 @@ namespace Broadcast
             // server
             // 
             server.BorderStyle = BorderStyle.FixedSingle;
-            server.Location = new Point(6, 26);
+            server.Location = new Point(5, 20);
+            server.Margin = new Padding(3, 2, 3, 2);
             server.Name = "server";
-            server.Size = new Size(125, 27);
+            server.Size = new Size(110, 23);
             server.TabIndex = 2;
             // 
             // port
             // 
             port.BorderStyle = BorderStyle.FixedSingle;
-            port.Location = new Point(137, 26);
+            port.Location = new Point(120, 20);
+            port.Margin = new Padding(3, 2, 3, 2);
             port.Name = "port";
-            port.Size = new Size(68, 27);
+            port.Size = new Size(60, 23);
             port.TabIndex = 3;
             // 
             // PeriodicEvents
@@ -97,9 +99,10 @@ namespace Broadcast
             // 
             EnableRedis.AutoSize = true;
             EnableRedis.Enabled = false;
-            EnableRedis.Location = new Point(6, 57);
+            EnableRedis.Location = new Point(5, 43);
+            EnableRedis.Margin = new Padding(3, 2, 3, 2);
             EnableRedis.Name = "EnableRedis";
-            EnableRedis.Size = new Size(67, 24);
+            EnableRedis.Size = new Size(54, 19);
             EnableRedis.TabIndex = 5;
             EnableRedis.Text = "Redis";
             EnableRedis.UseVisualStyleBackColor = true;
@@ -107,10 +110,9 @@ namespace Broadcast
             // 
             // loadData
             // 
-            loadData.Location = new Point(13, 524);
-            loadData.Margin = new Padding(3, 4, 3, 4);
+            loadData.Location = new Point(11, 393);
             loadData.Name = "loadData";
-            loadData.Size = new Size(86, 31);
+            loadData.Size = new Size(75, 23);
             loadData.TabIndex = 6;
             loadData.Text = "Load";
             loadData.UseVisualStyleBackColor = true;
@@ -128,9 +130,11 @@ namespace Broadcast
             simulatorGroup.Controls.Add(simData);
             simulatorGroup.Controls.Add(simTest);
             simulatorGroup.Controls.Add(simManual);
-            simulatorGroup.Location = new Point(131, 517);
+            simulatorGroup.Location = new Point(115, 388);
+            simulatorGroup.Margin = new Padding(3, 2, 3, 2);
             simulatorGroup.Name = "simulatorGroup";
-            simulatorGroup.Size = new Size(298, 111);
+            simulatorGroup.Padding = new Padding(3, 2, 3, 2);
+            simulatorGroup.Size = new Size(261, 83);
             simulatorGroup.TabIndex = 7;
             simulatorGroup.TabStop = false;
             simulatorGroup.Text = "Simulator";
@@ -139,9 +143,10 @@ namespace Broadcast
             // 
             simData.AutoSize = true;
             simData.Enabled = false;
-            simData.Location = new Point(6, 79);
+            simData.Location = new Point(5, 59);
+            simData.Margin = new Padding(3, 2, 3, 2);
             simData.Name = "simData";
-            simData.Size = new Size(94, 24);
+            simData.Size = new Size(76, 19);
             simData.TabIndex = 2;
             simData.TabStop = true;
             simData.Text = "Simulator";
@@ -151,9 +156,10 @@ namespace Broadcast
             // 
             simTest.AutoSize = true;
             simTest.Enabled = false;
-            simTest.Location = new Point(6, 49);
+            simTest.Location = new Point(5, 37);
+            simTest.Margin = new Padding(3, 2, 3, 2);
             simTest.Name = "simTest";
-            simTest.Size = new Size(92, 24);
+            simTest.Size = new Size(73, 19);
             simTest.TabIndex = 1;
             simTest.TabStop = true;
             simTest.Text = "Test Data";
@@ -165,9 +171,10 @@ namespace Broadcast
             simManual.AutoSize = true;
             simManual.Checked = true;
             simManual.Enabled = false;
-            simManual.Location = new Point(6, 22);
+            simManual.Location = new Point(5, 16);
+            simManual.Margin = new Padding(3, 2, 3, 2);
             simManual.Name = "simManual";
-            simManual.Size = new Size(79, 24);
+            simManual.Size = new Size(65, 19);
             simManual.TabIndex = 0;
             simManual.TabStop = true;
             simManual.Text = "Manual";
@@ -178,9 +185,11 @@ namespace Broadcast
             redisGroup.Controls.Add(server);
             redisGroup.Controls.Add(port);
             redisGroup.Controls.Add(EnableRedis);
-            redisGroup.Location = new Point(458, 519);
+            redisGroup.Location = new Point(401, 389);
+            redisGroup.Margin = new Padding(3, 2, 3, 2);
             redisGroup.Name = "redisGroup";
-            redisGroup.Size = new Size(341, 109);
+            redisGroup.Padding = new Padding(3, 2, 3, 2);
+            redisGroup.Size = new Size(298, 82);
             redisGroup.TabIndex = 8;
             redisGroup.TabStop = false;
             redisGroup.Text = "Redis";
@@ -189,9 +198,10 @@ namespace Broadcast
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { lastMessage });
-            statusStrip1.Location = new Point(0, 651);
+            statusStrip1.Location = new Point(0, 483);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(982, 22);
+            statusStrip1.Padding = new Padding(1, 0, 12, 0);
+            statusStrip1.Size = new Size(859, 22);
             statusStrip1.TabIndex = 9;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -199,7 +209,7 @@ namespace Broadcast
             // 
             lastMessage.DisplayStyle = ToolStripItemDisplayStyle.Text;
             lastMessage.Name = "lastMessage";
-            lastMessage.Size = new Size(0, 16);
+            lastMessage.Size = new Size(0, 17);
             // 
             // menuStrip1
             // 
@@ -207,7 +217,8 @@ namespace Broadcast
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(982, 28);
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.Size = new Size(859, 24);
             menuStrip1.TabIndex = 10;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -216,21 +227,21 @@ namespace Broadcast
             toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.ShortcutKeyDisplayString = "H";
-            toolStripMenuItem1.Size = new Size(55, 24);
+            toolStripMenuItem1.Size = new Size(44, 20);
             toolStripMenuItem1.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(224, 26);
+            aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(982, 673);
+            ClientSize = new Size(859, 505);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Controls.Add(redisGroup);
@@ -239,7 +250,6 @@ namespace Broadcast
             Controls.Add(SimulatorData);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Simulator Listener";
             simulatorGroup.ResumeLayout(false);

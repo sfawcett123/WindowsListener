@@ -7,14 +7,34 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon>assets\airplane.ico</ApplicationIcon>
+    <Title>Simulator Broadcast</Title>
+    <Company>Steven Fawcett @ Home</Company>
+    <Authors>Steven Fawcett</Authors>
+    <Description>Take a list of Flight Simulator Attributes, gather the data from the simulator and write them to Redis</Description>
+    <Copyright>© 2025 Steven Fawcett</Copyright>
+    <PackageIcon>airplane.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="data\engines.yml" />
+    <None Remove="data\startup.yaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="assets\airplane.ico" />
+    <Content Include="assets\engines.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\engines2.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\engines.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\startup.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -56,12 +76,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="assets\airplane.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="data\test.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Update="SimConnect.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
