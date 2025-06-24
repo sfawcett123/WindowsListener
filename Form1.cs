@@ -1,4 +1,5 @@
 using SimListener;
+using SimListView;
 using SimRedis;
 using System.Diagnostics;
 
@@ -32,6 +33,13 @@ namespace Broadcast
             btnPurge.Enabled = false; // Initially disabled
             server.Text = SimRedis.server; // Default server    
             port.Text = SimRedis.port.ToString(); // Default port
+
+            SimulatorData.ItemChanged += SimulatorData_ItemChanged;
+        }
+
+        private void SimulatorData_ItemChanged(object? sender, ItemData e)
+        {
+            SimRedis.write(e.key, e.value);
         }
 
         private void SimRedis_OnDisconnected(object? sender, EventArgs e)
@@ -100,10 +108,6 @@ namespace Broadcast
 
             Debug.WriteLine("Simulator connected");
             lastMessage.Text = "Simulator connected";
-        }
-        private void PeriodicEvents_Tick(object sender, EventArgs e)
-        {
-            SimRedis.write("TEST", "123");
         }
 
         private void EnableSimData(object sender, EventArgs e)
@@ -213,12 +217,10 @@ namespace Broadcast
             if (yaml.RedisEnabled)
             {
                 EnableRedis.Checked = true;
-                SimRedis.Enabled = true;
             }
             else
             {
                 EnableRedis.Checked = false;
-                SimRedis.Enabled = false;
             }
 
             if (yaml.CurrentMode == Yaml.Mode.Manual)

@@ -37,7 +37,6 @@ namespace Broadcast
             SimulatorData = new SimListView.SimListView();
             server = new TextBox();
             port = new TextBox();
-            PeriodicEvents = new System.Windows.Forms.Timer(components);
             EnableRedis = new CheckBox();
             loadData = new Button();
             openAircraftData = new OpenFileDialog();
@@ -86,12 +85,6 @@ namespace Broadcast
             port.Name = "port";
             port.Size = new Size(68, 27);
             port.TabIndex = 3;
-            // 
-            // PeriodicEvents
-            // 
-            PeriodicEvents.Enabled = true;
-            PeriodicEvents.Interval = 5000;
-            PeriodicEvents.Tick += PeriodicEvents_Tick;
             // 
             // EnableRedis
             // 
@@ -269,7 +262,6 @@ namespace Broadcast
         #endregion
         private TextBox server;
         private TextBox port;
-        private System.Windows.Forms.Timer PeriodicEvents;
         private CheckBox EnableRedis;
         private Button loadData;
         private OpenFileDialog openAircraftData;

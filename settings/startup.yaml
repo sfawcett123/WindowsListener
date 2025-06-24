@@ -4,5 +4,5 @@ load:
   - "engines.yml"
   - "engines2.yml" 
 mode: manual
-redis: false
+redis: true
     
