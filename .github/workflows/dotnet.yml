@@ -49,14 +49,14 @@ jobs:
       shell: bash
       run: |
          VERSION=$(echo "${{ steps.get_version.outputs.version }}")
-         dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
+         dotnet publish --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
 
     - name: Get Version (none release)
       if: github.event_name != 'release'
       shell: bash
       run: |
          VERSION=$(date +%s) # Use current timestamp as version
-         dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
+         dotnet publish --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
 
         # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - name: Upload package
@@ -65,4 +65,4 @@ jobs:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+        path: ${{ env.NuGetDirectory }}/
