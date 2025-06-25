@@ -63,14 +63,19 @@ jobs:
       run: |
          VERSION=$(date +%s) # Use current timestamp as version
          dotnet publish --configuration Release  -p PackageVersion=${VERSION}
-    
-    - name: Zip Folder
-      run: |
-          cd ${{ env.NuGetDirectory }}
-          zip -r broadcast-${{ steps.get_version.outputs.version }}.zip *   
-          
+         
+    - name: Compress Repository Excluding Git Files
+      uses: somaz94/compress-decompress@v1
+      with:
+          command: compress
+          source: .
+          format: zip
+          includeRoot: false
+          dest: './artifacts'
+          destfilename: broadcast-${{ steps.get_version.outputs.version }}.zip  
+
     - name: Update release     
       uses: softprops/action-gh-release@v2
       if: github.event_name == 'release'
       with:
-          files: ${{env.NuGetDirectory}}/broadcast-${{ steps.get_version.outputs.version }}.zip
+          files: './artifacts/*'
