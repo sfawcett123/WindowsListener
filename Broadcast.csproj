@@ -37,13 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SimListener" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\sfawcett123\SimListener\SimListener\SimListener.csproj" />
-    <ProjectReference Include="..\SimListView\SimListView.csproj" />
-    <ProjectReference Include="..\SimRedis\SimRedis.csproj" />
+    <PackageReference Include="SimListener" Version="2.1.0" />
+    <PackageReference Include="SimListView" Version="0.0.2" />
+    <PackageReference Include="SimRedis" Version="0.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +59,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="C:\Users\steve\.nuget\packages\simredis\0.0.3\contentFiles\any\net8.0-windows7.0\settings\redis.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
