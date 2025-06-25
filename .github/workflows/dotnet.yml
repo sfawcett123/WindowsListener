@@ -13,7 +13,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{github.workspace}}/application
+  NuGetDirectory: ${{github.workspace}}/bin/Release/net8.0-windows7.0
 
 permissions:
   deployments: write
@@ -55,17 +55,16 @@ jobs:
       shell: bash
       run: |
          VERSION=$(echo "${{ steps.get_version.outputs.version }}")
-         dotnet publish --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
+         dotnet publish --configuration Release --output -p PackageVersion=${VERSION}
 
     - name: Get Version (none release)
       if: github.event_name != 'release'
       shell: bash
       run: |
          VERSION=$(date +%s) # Use current timestamp as version
-         dotnet publish --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
+         dotnet publish --configuration Release  -p PackageVersion=${VERSION}
     
     - name: Zip Folder
-      if: github.event_name == 'release'
       run: |
           cd ${{ env.NuGetDirectory }}
           zip -r broadcast-${{ steps.get_version.outputs.version }}.zip *   
