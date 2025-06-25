@@ -15,6 +15,11 @@ env:
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{github.workspace}}/application
 
+permissions:
+  deployments: write
+  packages: write
+  contents: write
+
 defaults:
   run:
     shell: pwsh
