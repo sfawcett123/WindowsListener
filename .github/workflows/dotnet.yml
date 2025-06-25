@@ -68,11 +68,11 @@ jobs:
       uses: somaz94/compress-decompress@v1
       with:
           command: compress
-          source: .
+          source: "${{env.NuGetDirectory}}"
           format: zip
           includeRoot: false
           dest: './artifacts'
-          destfilename: broadcast-${{ steps.get_version.outputs.version }}.zip  
+          destfilename: "broadcast-${{ steps.get_version.outputs.version }}"  
 
     - name: Update release     
       uses: softprops/action-gh-release@v2
