@@ -8,6 +8,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  release:
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
