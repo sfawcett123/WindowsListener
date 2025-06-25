@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64</Platforms>
     <ApplicationIcon>assets\airplane.ico</ApplicationIcon>
     <Title>Simulator Broadcast</Title>
     <Company>Steven Fawcett @ Home</Company>

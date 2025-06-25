@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Reflection;
 
 namespace Broadcast
 {
@@ -22,8 +15,6 @@ namespace Broadcast
             this.textBoxDescription.Text = AssemblyDescription;
         }
 
-        #region Assembly Attribute Accessors
-
         public string AssemblyTitle
         {
             get
@@ -32,12 +23,12 @@ namespace Broadcast
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (!string.IsNullOrEmpty(titleAttribute.Title))
                     {
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location); // Fix for SYSLIB0012  
             }
         }
 
@@ -45,7 +36,8 @@ namespace Broadcast
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                var version = Assembly.GetExecutingAssembly()?.GetName()?.Version;
+                return version?.ToString() ?? "Unknown Version";
             }
         }
 
@@ -100,7 +92,7 @@ namespace Broadcast
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
-        #endregion
+
 
         private void onClose(object sender, EventArgs e)
         {
