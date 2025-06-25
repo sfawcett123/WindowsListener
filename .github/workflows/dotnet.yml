@@ -60,11 +60,13 @@ jobs:
          dotnet publish --configuration Release --output ${{ env.NuGetDirectory }} -p PackageVersion=${VERSION}
     
     - name: Zip Folder
+      if: github.event_name == 'release'
       run: |
-          zip -r broadcast-${{ steps.get_version.outputs.version }}.zip ${{ env.NuGetDirectory }}   
+          cd ${{ env.NuGetDirectory }}
+          zip -r broadcast-${{ steps.get_version.outputs.version }}.zip *   
           
     - name: Update release     
       uses: softprops/action-gh-release@v2
-      if: github.ref_type == 'tag'
+      if: github.event_name == 'release'
       with:
           files: broadcast*.zip
