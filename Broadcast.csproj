@@ -44,12 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.FlightSimulator.SimConnect">
-      <HintPath>..\..\..\..\..\MSFS 2024 SDK\SimConnect SDK\lib\managed\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -86,6 +80,9 @@
     <None Update="LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Microsoft.FlightSimulator.SimConnect.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
