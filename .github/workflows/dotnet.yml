@@ -13,7 +13,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace}}/application
+  NuGetDirectory: ${{github.workspace}}/application
 
 defaults:
   run:
@@ -69,4 +69,4 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: github.event_name == 'release'
       with:
-          files: broadcast*.zip
+          files: ${{env.NuGetDirectory}}/broadcast-${{ steps.get_version.outputs.version }}.zip
