@@ -13,7 +13,7 @@
     <Authors>Steven Fawcett</Authors>
     <Description>Take a list of Flight Simulator Attributes, gather the data from the simulator and write them to Redis</Description>
     <Copyright>© 2025 Steven Fawcett</Copyright>
-    <PackageIcon>airplane.png</PackageIcon>
+    <PackageIcon>assets\airplane.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
