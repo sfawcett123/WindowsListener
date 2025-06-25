@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
@@ -17,6 +17,7 @@
     <PackageIcon>assets\airplane.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <SupportedOSPlatformVersion>8.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SimListener" Version="2.1.0" />
+    <PackageReference Include="SimListener" Version="2.1.1" />
     <PackageReference Include="SimListView" Version="0.0.2" />
     <PackageReference Include="SimRedis" Version="0.0.3" />
   </ItemGroup>
