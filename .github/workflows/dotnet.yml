@@ -13,7 +13,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{github.workspace}}/bin/Release/net8.0-windows7.0/publish
+  NuGetDirectory: ${{github.workspace}}/bin/Release/net8.0-windows8.0/publish
 
 permissions:
   deployments: write
