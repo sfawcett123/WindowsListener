@@ -32,7 +32,6 @@ namespace Broadcast
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             SimulatorData = new SimListView.SimListView();
             server = new TextBox();
@@ -45,13 +44,13 @@ namespace Broadcast
             simTest = new RadioButton();
             simManual = new RadioButton();
             redisGroup = new GroupBox();
+            btnPurge = new Button();
             statusStrip1 = new StatusStrip();
             lastMessage = new ToolStripStatusLabel();
             menuStrip1 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
-            btnPurge = new Button();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -64,6 +63,7 @@ namespace Broadcast
             SimulatorData.FullRowSelect = true;
             SimulatorData.GridLines = true;
             SimulatorData.Location = new Point(11, 33);
+            SimulatorData.Margin = new Padding(3, 2, 3, 2);
             SimulatorData.Name = "SimulatorData";
             SimulatorData.Size = new Size(950, 472);
             SimulatorData.TabIndex = 0;
@@ -138,6 +138,7 @@ namespace Broadcast
             simData.TabStop = true;
             simData.Text = "Simulator";
             simData.UseVisualStyleBackColor = true;
+            simData.CheckedChanged += EnableSimData;
             // 
             // simTest
             // 
@@ -177,6 +178,16 @@ namespace Broadcast
             redisGroup.TabIndex = 8;
             redisGroup.TabStop = false;
             redisGroup.Text = "Redis";
+            // 
+            // btnPurge
+            // 
+            btnPurge.Location = new Point(241, 72);
+            btnPurge.Name = "btnPurge";
+            btnPurge.Size = new Size(94, 29);
+            btnPurge.TabIndex = 6;
+            btnPurge.Text = "Purge";
+            btnPurge.UseVisualStyleBackColor = true;
+            btnPurge.MouseClick += onPurgeRedis;
             // 
             // statusStrip1
             // 
@@ -219,16 +230,6 @@ namespace Broadcast
             aboutToolStripMenuItem.Size = new Size(133, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
-            // 
-            // btnPurge
-            // 
-            btnPurge.Location = new Point(241, 72);
-            btnPurge.Name = "btnPurge";
-            btnPurge.Size = new Size(94, 29);
-            btnPurge.TabIndex = 6;
-            btnPurge.Text = "Purge";
-            btnPurge.UseVisualStyleBackColor = true;
-            btnPurge.MouseClick += onPurgeRedis;
             // 
             // Form1
             // 

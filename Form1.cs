@@ -1,19 +1,36 @@
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventLog;
 using SimListener;
 using SimListView;
 using SimRedis;
-using System.Diagnostics;
 
 namespace Broadcast
 {
     public partial class Form1 : Form
     {
+        private static EventLogSettings myEventLogSettings = new EventLogSettings
+        {
+            SourceName = _sourceName,
+            LogName = _logName
+        };
+        private const string _sourceName = "Simulator Service";
+        private const string _logName = "Application";
         List<string> Parameters = new List<string>();
         string projectDirectory = Path.Combine(Environment.CurrentDirectory, "data");
         string configDirectory = Path.Combine(Environment.CurrentDirectory, "settings");
+        private ILoggerFactory factory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+            builder.AddDebug();
+            builder.AddEventLog(myEventLogSettings);
+        });
 
+        private ILogger? logger = null;
         public Form1()
         {
             InitializeComponent();
+
+            this.logger = factory.CreateLogger("Broadcast Listener");
 
             SimListener = new SimListener.Connect();
             SimListener.SimConnected += SimListener_SimConnected;
@@ -68,37 +85,45 @@ namespace Broadcast
             {
                 if (kvp.Key == null || kvp.Value == null)
                 {
-                    Debug.WriteLine("Received empty or null data from Redis.");
+                    logger?.LogError("Received empty or null data from Redis.");
                     lastMessage.Text = "Received empty or null data from Redis.";
                     continue;
                 }
-                //Debug.WriteLine($"Data {kvp.Key} = {kvp.Value}"); // Add unit if available
+                logger?.LogDebug($"Data {kvp.Key} = {kvp.Value}"); // Add unit if available
             }
         }
         private void SimListener_SimDataRecieved(object? sender, SimListener.SimulatorData e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SimListener_SimDataRecieved(sender, e)));
+                return;
+            }
+
             foreach (Dictionary<string, string> kvp in e.AircraftData)
             {
                 if (kvp == null || kvp.Count == 0)
                 {
-                    Debug.WriteLine("Received empty or null data from simulator.");
+                    logger?.LogError("Received empty or null data from simulator.");
                     lastMessage.Text = "Received empty or null data from simulator.";
                     continue;
                 }
+                logger?.LogInformation($"Simulator data received -> {kvp.Keys} = {kvp.Values} ");
             }
+
         }
 
         private void SimListener_SimConnected(object? sender, EventArgs e)
         {
             if (sender == null)
             {
-                Debug.WriteLine("Simulator connection failed: sender is null");
+                logger?.LogError("Simulator connection failed: sender is null");
                 lastMessage.Text = "Simulator connection failed: sender is null";
                 return;
             }
             if (sender is not Connect)
             {
-                Debug.WriteLine("Simulator connection failed: sender is not Connect");
+                logger?.LogError("Simulator connection failed: sender is not Connect");
                 lastMessage.Text = "Simulator connection failed: sender is not Connect";
                 return;
             }
@@ -106,13 +131,14 @@ namespace Broadcast
 
             s.AddRequests(SimulatorData.to_string());
 
-            Debug.WriteLine("Simulator connected");
+            logger?.LogDebug("Simulator connected");
             lastMessage.Text = "Simulator connected";
         }
 
         private void EnableSimData(object sender, EventArgs e)
         {
-            //SimListener.Enabled = simulatorOn.Checked;
+            SimListener.Enabled = simData.Checked;
+            logger?.LogInformation($"Simulator data enabled: {SimListener.Enabled}");
         }
 
         private void OnEnableRedis(object sender, EventArgs e)
@@ -153,7 +179,7 @@ namespace Broadcast
             if (string.IsNullOrEmpty(filePath))
             {
                 // simulatorOn.Enabled = false;
-                Debug.WriteLine("No file selected.");
+                logger?.LogError("No file selected.");
                 lastMessage.Text = "No file selected.";
                 simData.Enabled = false;
                 simManual.Enabled = false;
@@ -162,7 +188,7 @@ namespace Broadcast
             }
             try
             {
-                Debug.WriteLine($"Aircraft data loaded from {filePath}");
+                logger?.LogInformation($"Aircraft data loaded from {filePath}");
                 lastMessage.Text = $"Aircraft data loaded from {filePath}";
                 SimulatorData.load(filePath);
                 simData.Enabled = true;
@@ -171,7 +197,7 @@ namespace Broadcast
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error loading aircraft data: {ex.Message}");
+                logger?.LogError($"Error loading aircraft data: {ex.Message}");
                 lastMessage.Text = $"Error loading aircraft data: {ex.Message}";
                 simData.Enabled = false;
                 simManual.Enabled = false;
@@ -194,7 +220,7 @@ namespace Broadcast
             Yaml yaml = new Yaml(Path.Combine(configDirectory, "startup.yaml"));
             if (yaml == null || yaml.Files.Count == 0)
             {
-                Debug.WriteLine("No YAML files found in the configuration directory.");
+                logger?.LogError("No YAML files found in the configuration directory.");
                 lastMessage.Text = "No YAML files found in the configuration directory.";
             }
             else
@@ -209,7 +235,7 @@ namespace Broadcast
 
             if (yaml == null)
             {
-                Debug.WriteLine("YAML data is null.");
+                logger?.LogError("YAML data is null.");
                 lastMessage.Text = "YAML data is null.";
                 return;
             }
