@@ -67,8 +67,7 @@ jobs:
       shell: bash
       run: |
          VERSION=$(date +%s) # Use current timestamp as version
-         dotnet publish --configuration Release -p PackageVersion=${VERSION}
-
+         dotnet publish --configuration Release -p PackageVersion=${VERSION} /property:IncludeNativeLibrariesForSelfExtract=True /property:DebugType=None /property:DebugSymbols=False
     - name: Upload package
       uses: actions/upload-artifact@v4
       with:
