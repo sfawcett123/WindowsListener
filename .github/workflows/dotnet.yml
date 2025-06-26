@@ -1,14 +1,19 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Publish Package
+name: Publish 
 
 on:
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
-    branches: [ "master" ]
+    branches:
+      - '*'       # Run the workflow on all branches
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - '*'          # Run the workflow for all pull requests
   release:
+    types:
+      - published    # Run the workflow when a new GitHub release is published
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
