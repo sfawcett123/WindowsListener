@@ -26,6 +26,8 @@ defaults:
     
 jobs:
   build:
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
@@ -89,7 +91,7 @@ jobs:
           format: zip
           includeRoot: false
           dest: './artifacts'
-          destfilename: "broadcast-${{ steps.get_version.outputs.version }}"  
+          destfilename: "broadcast-${{ needs.build.outputs.version }}"  
 
     - name: Update release     
       uses: softprops/action-gh-release@v2
