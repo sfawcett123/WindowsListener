@@ -108,7 +108,17 @@ namespace Broadcast
                     lastMessage.Text = "Received empty or null data from simulator.";
                     continue;
                 }
-                logger?.LogInformation($"Simulator data received -> {kvp.Keys} = {kvp.Values} ");
+                foreach (KeyValuePair<string, string> item in kvp)
+                {
+                    if (item.Key == null || item.Value == null)
+                    {
+                        logger?.LogError("Received empty or null key/value from simulator.");
+                        lastMessage.Text = "Received empty or null key/value from simulator.";
+                        continue;
+                    }
+                    logger?.LogInformation($"Data {item.Key} = {item.Value}"); // Add unit if available
+                    SimulatorData.setValue(item.Key, item.Value);
+                }
             }
 
         }
