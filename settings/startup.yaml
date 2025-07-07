@@ -2,7 +2,6 @@
 
 load:
   - "engines.yml"
-  - "engines2.yml" 
 mode: manual
 redis: true
     

@@ -100,17 +100,21 @@ namespace Broadcast
                 return;
             }
 
-            foreach (Dictionary<string, string> kvp in e.AircraftData)
+            foreach (Dictionary<string, string> aircraftData in e.AircraftData)
             {
-                if (kvp == null || kvp.Count == 0)
+                foreach (KeyValuePair<string, string> kvp in aircraftData)
                 {
-                    logger?.LogError("Received empty or null data from simulator.");
-                    lastMessage.Text = "Received empty or null data from simulator.";
-                    continue;
+                    if (string.IsNullOrEmpty(kvp.Key) || string.IsNullOrEmpty(kvp.Value))
+                    {
+                        logger?.LogError("Received empty or null data from simulator.");
+                        lastMessage.Text = "Received empty or null data from simulator.";
+                        continue;
+                    }
+                    logger?.LogInformation($"Simulator data received -> {kvp.Key} = {kvp.Value}");
+                    SimRedis.write(kvp.Key, kvp.Value);
+                    SimulatorData.setValue(kvp.Key, kvp.Value);
                 }
-                logger?.LogInformation($"Simulator data received -> {kvp.Keys} = {kvp.Values} ");
             }
-
         }
 
         private void SimListener_SimConnected(object? sender, EventArgs e)
