@@ -43,7 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimListener\SimListener\SimListener.csproj" />
-    <ProjectReference Include="..\SimListView\SimListView.csproj" />
+    <ProjectReference Include="..\SimListView\Application\SimListView.csproj" />
     <ProjectReference Include="..\SimRedis\SimRedis.csproj" />
   </ItemGroup>
 

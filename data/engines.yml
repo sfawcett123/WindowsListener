@@ -1,8 +1,6 @@
 ﻿---
-
 measures:
-   - id: engine_1
-     name: "Engine One"
+   - name: "Engine One"
      variable: "GENERAL ENG RPM:1"
      real:
        min: 0
@@ -13,8 +11,7 @@ measures:
        min: 0
        max: 100
        unit: "RPM"
-   - id: engine_2
-     name: "Engine Two"
+   - name: "Engine Two"
      variable: "GENERAL ENG RPM:2"
      real:
        min: 0
