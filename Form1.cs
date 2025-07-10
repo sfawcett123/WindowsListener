@@ -13,6 +13,7 @@ namespace Broadcast
             SourceName = _sourceName,
             LogName = _logName
         };
+        
         private const string _sourceName = "Simulator Service";
         private const string _logName = "Application";
         List<string> Parameters = new List<string>();
@@ -32,31 +33,31 @@ namespace Broadcast
 
             this.logger = factory.CreateLogger("Broadcast Listener");
 
-            SimListener = new SimListener.Connect();
-            SimListener.SimConnected += SimListener_SimConnected;
-            SimListener.SimDataRecieved += SimListener_SimDataRecieved;
-            SimListener.Enabled = false; // Initially disabled
+            simConnection = new SimListener.Connect();
+            simConnection.SimConnected += SimListener_SimConnected;
+            simConnection.SimDataRecieved += SimListener_SimDataRecieved;
+            simConnection.Enabled = false; // Initially disabled
                                          // simulatorOn.Checked = false; // Initially disabled
                                          // simulatorOn.Enabled = false; // Disable until Simulator is configured
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
-            SimRedis = new SimRedis.SimRedis();
-            SimRedis.DataRecieved += SimRedis_RedisDataRecieved;
-            SimRedis.OnConnected += SimRedis_OnConnected;
-            SimRedis.OnDisconnected += SimRedis_OnDisconnected;
-            SimRedis.Enabled = false; // Enable Redis connection
+            redisConnection = new SimRedis.SimRedis();
+            redisConnection.DataRecieved += SimRedis_RedisDataRecieved;
+            redisConnection.OnConnected += SimRedis_OnConnected;
+            redisConnection.OnDisconnected += SimRedis_OnDisconnected;
+            redisConnection.Enabled = false; // Enable Redis connection
             EnableRedis.Checked = false; // Initially enabled
 
             btnPurge.Enabled = false; // Initially disabled
-            server.Text = SimRedis.server; // Default server    
-            port.Text = SimRedis.port.ToString(); // Default port
+            server.Text = redisConnection.server; // Default server    
+            port.Text = redisConnection.port.ToString(); // Default port
 
-            SimulatorData.ItemChanged += SimulatorData_ItemChanged;
+            displayData.ItemChanged += SimulatorData_ItemChanged;
         }
 
         private void SimulatorData_ItemChanged(object? sender, ItemData e)
         {
-            SimRedis.write(e.key,e.index , e.value);
+            redisConnection.write(e.key,e.index , e.value);
         }
 
         private void SimRedis_OnDisconnected(object? sender, EventArgs e)
@@ -111,8 +112,8 @@ namespace Broadcast
                         continue;
                     }
                     logger?.LogInformation($"Simulator data received -> {kvp.Key} = {kvp.Value}");
-                    SimRedis.write(kvp.Key, kvp.Value);
-                    SimulatorData.setValue(kvp.Key, kvp.Value);
+                    redisConnection.write(kvp.Key, kvp.Value);
+                    displayData.setValue(kvp.Key, kvp.Value);
                 }
             }
         }
@@ -133,7 +134,7 @@ namespace Broadcast
             }
             Connect s = (Connect)sender;
 
-            s.AddRequests(SimulatorData.to_string());
+            s.AddRequests(displayData.to_string());
 
             logger?.LogDebug("Simulator connected");
             lastMessage.Text = "Simulator connected";
@@ -141,13 +142,13 @@ namespace Broadcast
 
         private void EnableSimData(object sender, EventArgs e)
         {
-            SimListener.Enabled = simData.Checked;
-            logger?.LogInformation($"Simulator data enabled: {SimListener.Enabled}");
+            simConnection.Enabled = simData.Checked;
+            logger?.LogInformation($"Simulator data enabled: {simConnection.Enabled}");
         }
 
         private void OnEnableRedis(object sender, EventArgs e)
         {
-            SimRedis.Enabled = EnableRedis.Checked;
+            redisConnection.Enabled = EnableRedis.Checked;
         }
 
         private void OnLoadDataButton(object sender, EventArgs e)
@@ -163,7 +164,7 @@ namespace Broadcast
 
             if (openAircraftData.ShowDialog() == DialogResult.OK)
             {
-                SimulatorData.clear();
+                displayData.clear();
 
                 foreach (string filePath in openAircraftData.FileNames)
                 {
@@ -194,7 +195,7 @@ namespace Broadcast
             {
                 logger?.LogInformation($"Aircraft data loaded from {filePath}");
                 lastMessage.Text = $"Aircraft data loaded from {filePath}";
-                SimulatorData.load(filePath);
+                displayData.load(filePath);
                 simData.Enabled = true;
                 simManual.Enabled = true;
                 simTest.Enabled = true;
@@ -210,7 +211,7 @@ namespace Broadcast
         }
         private void simTest_CheckedChanged(object sender, EventArgs e)
         {
-            SimulatorData.TestMode = simTest.Checked;
+            displayData.TestMode = simTest.Checked;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -229,7 +230,7 @@ namespace Broadcast
             }
             else
             {
-                SimulatorData.clear();
+                displayData.clear();
                 foreach (string file in yaml.Files)
                 {
                     string f = Path.Combine(projectDirectory, file);
@@ -270,7 +271,7 @@ namespace Broadcast
 
         private void onPurgeRedis(object sender, MouseEventArgs e)
         {
-            SimRedis.Purge();
+            redisConnection.Purge();
         }
     }
 }

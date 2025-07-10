@@ -8,9 +8,9 @@ namespace Broadcast
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private SimListener.Connect SimListener = null;
-        public SimListView.SimListView SimulatorData;
-        public SimRedis.SimRedis SimRedis = null;
+        public SimListener.Connect simConnection = null;
+        public SimListView.SimListView displayData = null;
+        public SimRedis.SimRedis redisConnection = null;
         /// <summary>
         ///  Clean up any resources being used.
         /// </summary>
@@ -33,7 +33,7 @@ namespace Broadcast
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            SimulatorData = new SimListView.SimListView();
+            displayData = new SimListView.SimListView();
             server = new TextBox();
             port = new TextBox();
             EnableRedis = new CheckBox();
@@ -57,18 +57,18 @@ namespace Broadcast
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // SimulatorData
+            // displayData
             // 
-            SimulatorData.Alignment = ListViewAlignment.Default;
-            SimulatorData.FullRowSelect = true;
-            SimulatorData.GridLines = true;
-            SimulatorData.Location = new Point(11, 33);
-            SimulatorData.Margin = new Padding(3, 2, 3, 2);
-            SimulatorData.Name = "SimulatorData";
-            SimulatorData.Size = new Size(950, 472);
-            SimulatorData.TabIndex = 0;
-            SimulatorData.UseCompatibleStateImageBehavior = false;
-            SimulatorData.View = View.Details;
+            displayData.Alignment = ListViewAlignment.Default;
+            displayData.FullRowSelect = true;
+            displayData.GridLines = true;
+            displayData.Location = new Point(11, 33);
+            displayData.Margin = new Padding(3, 2, 3, 2);
+            displayData.Name = "displayData";
+            displayData.Size = new Size(950, 472);
+            displayData.TabIndex = 0;
+            displayData.UseCompatibleStateImageBehavior = false;
+            displayData.View = View.Details;
             // 
             // server
             // 
@@ -241,7 +241,7 @@ namespace Broadcast
             Controls.Add(redisGroup);
             Controls.Add(simulatorGroup);
             Controls.Add(loadData);
-            Controls.Add(SimulatorData);
+            Controls.Add(displayData);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);

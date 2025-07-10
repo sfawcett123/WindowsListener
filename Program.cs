@@ -1,17 +1,25 @@
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+
 namespace Broadcast
 {
-    internal static class Program
+    public class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static Form1? MainForm { get; private set; }
+
         [STAThread]
-        static void Main()
+        public static void Main(string[] args)
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            CreateWebHostBuilder(args).Build().RunAsync();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            MainForm = new Form1();
+            Application.Run(MainForm);
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
     }
 }
