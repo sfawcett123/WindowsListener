@@ -266,7 +266,7 @@ namespace Broadcast
             {
                 simTest.Checked = true;
             }
-
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void onPurgeRedis(object sender, MouseEventArgs e)

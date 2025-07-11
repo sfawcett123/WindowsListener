@@ -2,6 +2,6 @@
 
 load:
   - "engines.yml"
-mode: manual
-redis: true
+mode: Simulator   # Connection to MSFS Options : Manual , Simulator, Test
+redis: true       # Connection to Redis Options : true , false
     
