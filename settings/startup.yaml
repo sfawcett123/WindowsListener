@@ -4,4 +4,9 @@ load:
   - "engines.yml"
 mode: Simulator   # Connection to MSFS Options : Manual , Simulator, Test
 redis: true       # Connection to Redis Options : true , false
+simulator:
+   autostart: false
+   command: 'start shell:AppsFolder\Microsoft.Limitless_8wekyb3d8bbwe!App'
+
+    
     

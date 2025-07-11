@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging.EventLog;
 using SimListener;
 using SimListView;
 using SimRedis;
+using System.Diagnostics;
 
 namespace Broadcast
 {
@@ -13,19 +14,18 @@ namespace Broadcast
             SourceName = _sourceName,
             LogName = _logName
         };
-        
+        private Yaml? yaml = null;  
         private const string _sourceName = "Simulator Service";
         private const string _logName = "Application";
-        List<string> Parameters = new List<string>();
-        string projectDirectory = Path.Combine(Environment.CurrentDirectory, "data");
-        string configDirectory = Path.Combine(Environment.CurrentDirectory, "settings");
+        private List<string> Parameters = new List<string>();
+        private string projectDirectory = Path.Combine(Environment.CurrentDirectory, "data");
+        private string configDirectory = Path.Combine(Environment.CurrentDirectory, "settings");
         private ILoggerFactory factory = LoggerFactory.Create(builder =>
         {
             builder.AddConsole();
             builder.AddDebug();
             builder.AddEventLog(myEventLogSettings);
         });
-
         private ILogger? logger = null;
         public Form1()
         {
@@ -37,8 +37,8 @@ namespace Broadcast
             simConnection.SimConnected += SimListener_SimConnected;
             simConnection.SimDataRecieved += SimListener_SimDataRecieved;
             simConnection.Enabled = false; // Initially disabled
-                                         // simulatorOn.Checked = false; // Initially disabled
-                                         // simulatorOn.Enabled = false; // Disable until Simulator is configured
+                                           // simulatorOn.Checked = false; // Initially disabled
+                                           // simulatorOn.Enabled = false; // Disable until Simulator is configured
 
             // Fix for CS1503: Convert port.Text (string) to an integer using int.Parse
             redisConnection = new SimRedis.SimRedis();
@@ -54,32 +54,28 @@ namespace Broadcast
 
             displayData.ItemChanged += SimulatorData_ItemChanged;
         }
-
         private void SimulatorData_ItemChanged(object? sender, ItemData e)
         {
-            redisConnection.write(e.key,e.index , e.value);
+            redisConnection.write(e.key, e.index, e.value);
         }
-
         private void SimRedis_OnDisconnected(object? sender, EventArgs e)
         {
-            if( InvokeRequired )
+            if (InvokeRequired)
             {
                 Invoke(new Action(() => SimRedis_OnDisconnected(sender, e)));
                 return;
             }
             btnPurge.Enabled = false; // Disable purge button on disconnect
         }
-
         private void SimRedis_OnConnected(object? sender, EventArgs e)
         {
-            if( InvokeRequired )
+            if (InvokeRequired)
             {
                 Invoke(new Action(() => SimRedis_OnConnected(sender, e)));
                 return;
             }
             btnPurge.Enabled = true; // Enable purge button on connect  
         }
-
         private void SimRedis_RedisDataRecieved(object? sender, RedisDataEventArgs e)
         {
             foreach (KeyValuePair<string, string> kvp in e.AircraftData)
@@ -117,19 +113,20 @@ namespace Broadcast
                 }
             }
         }
-
         private void SimListener_SimConnected(object? sender, EventArgs e)
         {
             if (sender == null)
             {
                 logger?.LogError("Simulator connection failed: sender is null");
                 lastMessage.Text = "Simulator connection failed: sender is null";
+                btnStart.Enabled = true;
                 return;
             }
             if (sender is not Connect)
             {
                 logger?.LogError("Simulator connection failed: sender is not Connect");
                 lastMessage.Text = "Simulator connection failed: sender is not Connect";
+                btnStart.Enabled = true;
                 return;
             }
             Connect s = (Connect)sender;
@@ -138,19 +135,17 @@ namespace Broadcast
 
             logger?.LogDebug("Simulator connected");
             lastMessage.Text = "Simulator connected";
+            btnStart.Enabled = false;
         }
-
         private void EnableSimData(object sender, EventArgs e)
         {
             simConnection.Enabled = simData.Checked;
             logger?.LogInformation($"Simulator data enabled: {simConnection.Enabled}");
         }
-
         private void OnEnableRedis(object sender, EventArgs e)
         {
             redisConnection.Enabled = EnableRedis.Checked;
         }
-
         private void OnLoadDataButton(object sender, EventArgs e)
         {
 
@@ -176,7 +171,6 @@ namespace Broadcast
                 }
             }
         }
-
         private void loadFile(string filePath)
         {
             simManual.Checked = true;
@@ -213,16 +207,14 @@ namespace Broadcast
         {
             displayData.TestMode = simTest.Checked;
         }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox a = new AboutBox();
             a.Show();
         }
-
         private void loadForm(object sender, EventArgs e)
         {
-            Yaml yaml = new Yaml(Path.Combine(configDirectory, "startup.yaml"));
+            yaml = new Yaml(Path.Combine(configDirectory, "startup.yaml"));
             if (yaml == null || yaml.Files.Count == 0)
             {
                 logger?.LogError("No YAML files found in the configuration directory.");
@@ -257,21 +249,57 @@ namespace Broadcast
             if (yaml.CurrentMode == Yaml.Mode.Manual)
             {
                 simManual.Checked = true;
+                btnStart.Enabled = false;
             }
             else if (yaml.CurrentMode == Yaml.Mode.Simulator)
             {
                 simData.Checked = true;
+                btnStart.Enabled = true;
             }
             else if (yaml.CurrentMode == Yaml.Mode.Test)
             {
                 simTest.Checked = true;
+                btnStart.Enabled = false;
             }
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void onPurgeRedis(object sender, MouseEventArgs e)
         {
             redisConnection.Purge();
+        }
+        public static void StartSimulator(string Command)
+        {
+            if(string.IsNullOrEmpty(Command))
+            {
+                throw new ArgumentException("Command cannot be null or empty.", nameof(Command));
+            }
+
+            ProcessStartInfo ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + Command)
+            {
+                CreateNoWindow = true,
+                UseShellExecute = true
+            };
+
+            Process? Process = System.Diagnostics.Process.Start(ProcessInfo);
+            if (Process == null)
+            {
+                throw new InvalidOperationException("Failed to start the process.");
+            }
+        }
+        private void btnStartSimulator(object sender, EventArgs e)
+        {
+            try
+            {
+                Form1.StartSimulator(yaml?.SimulatorCommand ?? "");
+                btnStart.Enabled = false;
+                lastMessage.Text = "Initiated Flight Simulator Start";
+            }
+            catch (Exception)
+            {
+                logger?.LogError("Failed to start the simulator. Please check the command.");
+                lastMessage.Text = "Failed to start the simulator. Please check the command.";
+            }
+            
         }
     }
 }

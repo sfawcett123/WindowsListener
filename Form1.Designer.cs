@@ -51,6 +51,7 @@ namespace Broadcast
             toolStripMenuItem1 = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
+            btnStart = new Button();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -119,6 +120,7 @@ namespace Broadcast
             // 
             // simulatorGroup
             // 
+            simulatorGroup.Controls.Add(btnStart);
             simulatorGroup.Controls.Add(simData);
             simulatorGroup.Controls.Add(simTest);
             simulatorGroup.Controls.Add(simManual);
@@ -242,6 +244,16 @@ namespace Broadcast
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
+            // btnStart
+            // 
+            btnStart.Location = new Point(169, 54);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(86, 23);
+            btnStart.TabIndex = 3;
+            btnStart.Text = "Start";
+            btnStart.UseVisualStyleBackColor = true;
+            btnStart.Click += btnStartSimulator;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -288,5 +300,6 @@ namespace Broadcast
         private ToolStripMenuItem aboutToolStripMenuItem;
         private SaveFileDialog saveFileDialog1;
         private Button btnPurge;
+        private Button btnStart;
     }
 }
