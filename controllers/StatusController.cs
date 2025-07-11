@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
-using System.Security.Policy;
 
 namespace Broadcast.controllers
 {

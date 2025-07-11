@@ -14,7 +14,7 @@ namespace Broadcast
             SourceName = _sourceName,
             LogName = _logName
         };
-        private Yaml? yaml = null;  
+        public Yaml? yaml = null;  
         private const string _sourceName = "Simulator Service";
         private const string _logName = "Application";
         private List<string> Parameters = new List<string>();

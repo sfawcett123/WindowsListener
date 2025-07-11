@@ -4,7 +4,7 @@ using YamlDotNet.Serialization;
 
 namespace Broadcast
 {
-    internal class Yaml
+    public class Yaml
     {
         public List<string> Files
         {
