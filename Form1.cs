@@ -14,7 +14,9 @@ namespace Broadcast
             SourceName = _sourceName,
             LogName = _logName
         };
-        public Yaml? yaml = null;  
+
+        public Process? process = null;
+        public Yaml? yaml = null;
         private const string _sourceName = "Simulator Service";
         private const string _logName = "Application";
         private List<string> Parameters = new List<string>();
@@ -52,7 +54,7 @@ namespace Broadcast
             server.Text = redisConnection.server; // Default server    
             port.Text = redisConnection.port.ToString(); // Default port
 
-            if( displayData is not null ) displayData.ItemChanged += SimulatorData_ItemChanged;
+            if (displayData is not null) displayData.ItemChanged += SimulatorData_ItemChanged;
         }
         private void SimulatorData_ItemChanged(object? sender, ItemData e)
         {
@@ -269,7 +271,7 @@ namespace Broadcast
         }
         public static void StartSimulator(string Command)
         {
-            if(string.IsNullOrEmpty(Command))
+            if (string.IsNullOrEmpty(Command))
             {
                 throw new ArgumentException("Command cannot be null or empty.", nameof(Command));
             }
@@ -290,6 +292,14 @@ namespace Broadcast
         {
             try
             {
+                if( checkProcess())
+                {
+                    logger?.LogInformation("Simulator is already running.");
+                    lastMessage.Text = "Simulator is already running.";
+                    btnStart.Enabled = false;
+                    return;
+                }
+
                 Form1.StartSimulator(yaml?.SimulatorCommand ?? "");
                 btnStart.Enabled = false;
                 lastMessage.Text = "Initiated Flight Simulator Start";
@@ -299,7 +309,14 @@ namespace Broadcast
                 logger?.LogError("Failed to start the simulator. Please check the command.");
                 lastMessage.Text = "Failed to start the simulator. Please check the command.";
             }
-            
+
+        }
+
+
+        private bool checkProcess()
+        {
+            SimProcess simProcess = new SimProcess();
+            return simProcess.GetProcess("FlightSimulator2024");
         }
     }
 }

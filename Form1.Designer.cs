@@ -40,6 +40,7 @@ namespace Broadcast
             loadData = new Button();
             openAircraftData = new OpenFileDialog();
             simulatorGroup = new GroupBox();
+            btnStart = new Button();
             simData = new RadioButton();
             simTest = new RadioButton();
             simManual = new RadioButton();
@@ -51,7 +52,6 @@ namespace Broadcast
             toolStripMenuItem1 = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
-            btnStart = new Button();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -132,6 +132,16 @@ namespace Broadcast
             simulatorGroup.TabIndex = 7;
             simulatorGroup.TabStop = false;
             simulatorGroup.Text = "Simulator";
+            // 
+            // btnStart
+            // 
+            btnStart.Location = new Point(169, 54);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(86, 23);
+            btnStart.TabIndex = 3;
+            btnStart.Text = "Start";
+            btnStart.UseVisualStyleBackColor = true;
+            btnStart.Click += btnStartSimulator;
             // 
             // simData
             // 
@@ -243,16 +253,6 @@ namespace Broadcast
             aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
-            // 
-            // btnStart
-            // 
-            btnStart.Location = new Point(169, 54);
-            btnStart.Name = "btnStart";
-            btnStart.Size = new Size(86, 23);
-            btnStart.TabIndex = 3;
-            btnStart.Text = "Start";
-            btnStart.UseVisualStyleBackColor = true;
-            btnStart.Click += btnStartSimulator;
             // 
             // Form1
             // 
