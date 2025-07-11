@@ -8,10 +8,15 @@ namespace Broadcast.controllers
     public class StartController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<String> Get()
+        public ActionResult<string> Get()
         {
-            Program.MainForm?.Invoke(new Action(() => { }));
-            Form1.StartSimulator(Program.MainForm.yaml?.SimulatorCommand ?? "" );
+            if (Program.MainForm == null || Program.MainForm.yaml == null)
+            {
+                return BadRequest("MainForm or YAML configuration is not initialized.");
+            }
+
+            Program.MainForm.Invoke(new Action(() => { }));
+            Form1.StartSimulator(Program.MainForm.yaml.SimulatorCommand);
             return "Simulator started";
         }
     }

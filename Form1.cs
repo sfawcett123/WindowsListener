@@ -52,7 +52,7 @@ namespace Broadcast
             server.Text = redisConnection.server; // Default server    
             port.Text = redisConnection.port.ToString(); // Default port
 
-            displayData.ItemChanged += SimulatorData_ItemChanged;
+            if( displayData is not null ) displayData.ItemChanged += SimulatorData_ItemChanged;
         }
         private void SimulatorData_ItemChanged(object? sender, ItemData e)
         {
