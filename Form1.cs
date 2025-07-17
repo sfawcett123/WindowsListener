@@ -292,7 +292,7 @@ namespace Broadcast
         {
             try
             {
-                if( checkProcess())
+                if (checkProcess())
                 {
                     logger?.LogInformation("Simulator is already running.");
                     lastMessage.Text = "Simulator is already running.";
@@ -317,6 +317,21 @@ namespace Broadcast
         {
             SimProcess simProcess = new SimProcess();
             return simProcess.GetProcess("FlightSimulator2024");
+        }
+
+        private void OnSetPosition(object sender, MouseEventArgs e)
+        {
+            if( simConnection.WritePosition())
+            {
+                logger?.LogInformation("Position set successfully.");
+                lastMessage.Text = "Position set successfully.";
+            }
+            else
+            {
+                logger?.LogError("Failed to set position.");
+                lastMessage.Text = "Failed to set position.";
+            }
+
         }
     }
 }

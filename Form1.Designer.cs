@@ -52,10 +52,18 @@ namespace Broadcast
             toolStripMenuItem1 = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
+            tabControl1 = new TabControl();
+            tabVariables = new TabPage();
+            tabPosition = new TabPage();
+            tabStatus = new TabPage();
+            btnSetPosition = new Button();
             simulatorGroup.SuspendLayout();
             redisGroup.SuspendLayout();
             statusStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabVariables.SuspendLayout();
+            tabPosition.SuspendLayout();
             SuspendLayout();
             // 
             // displayData
@@ -63,10 +71,10 @@ namespace Broadcast
             displayData.Alignment = ListViewAlignment.Default;
             displayData.FullRowSelect = true;
             displayData.GridLines = true;
-            displayData.Location = new Point(10, 25);
+            displayData.Location = new Point(0, 0);
             displayData.Margin = new Padding(3, 2, 3, 2);
             displayData.Name = "displayData";
-            displayData.Size = new Size(832, 355);
+            displayData.Size = new Size(816, 315);
             displayData.TabIndex = 0;
             displayData.UseCompatibleStateImageBehavior = false;
             displayData.View = View.Details;
@@ -254,17 +262,70 @@ namespace Broadcast
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabVariables);
+            tabControl1.Controls.Add(tabStatus);
+            tabControl1.Controls.Add(tabPosition);
+            tabControl1.Location = new Point(29, 32);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(830, 355);
+            tabControl1.TabIndex = 11;
+            // 
+            // tabVariables
+            // 
+            tabVariables.Controls.Add(displayData);
+            tabVariables.Location = new Point(4, 24);
+            tabVariables.Name = "tabVariables";
+            tabVariables.Padding = new Padding(3);
+            tabVariables.Size = new Size(822, 327);
+            tabVariables.TabIndex = 1;
+            tabVariables.Text = "Sim Vars";
+            tabVariables.UseVisualStyleBackColor = true;
+            // 
+            // tabPosition
+            // 
+            tabPosition.Controls.Add(btnSetPosition);
+            tabPosition.Location = new Point(4, 24);
+            tabPosition.Name = "tabPosition";
+            tabPosition.Padding = new Padding(3);
+            tabPosition.Size = new Size(822, 327);
+            tabPosition.TabIndex = 2;
+            tabPosition.Text = "Position";
+            tabPosition.UseVisualStyleBackColor = true;
+            // 
+            // tabStatus
+            // 
+            tabStatus.Location = new Point(4, 24);
+            tabStatus.Name = "tabStatus";
+            tabStatus.Padding = new Padding(3);
+            tabStatus.Size = new Size(822, 327);
+            tabStatus.TabIndex = 0;
+            tabStatus.Text = "Status";
+            tabStatus.UseVisualStyleBackColor = true;
+            // 
+            // btnSetPosition
+            // 
+            btnSetPosition.Location = new Point(739, 298);
+            btnSetPosition.Name = "btnSetPosition";
+            btnSetPosition.Size = new Size(75, 23);
+            btnSetPosition.TabIndex = 0;
+            btnSetPosition.Text = "Set";
+            btnSetPosition.UseVisualStyleBackColor = true;
+            btnSetPosition.MouseClick += OnSetPosition;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(859, 505);
+            Controls.Add(tabControl1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Controls.Add(redisGroup);
             Controls.Add(simulatorGroup);
             Controls.Add(loadData);
-            Controls.Add(displayData);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Form1";
@@ -278,6 +339,9 @@ namespace Broadcast
             statusStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            tabControl1.ResumeLayout(false);
+            tabVariables.ResumeLayout(false);
+            tabPosition.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -301,5 +365,10 @@ namespace Broadcast
         private SaveFileDialog saveFileDialog1;
         private Button btnPurge;
         private Button btnStart;
+        private TabControl tabControl1;
+        private TabPage tabVariables;
+        private TabPage tabPosition;
+        private TabPage tabStatus;
+        private Button btnSetPosition;
     }
 }
